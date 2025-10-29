@@ -28,19 +28,19 @@ fi
 
 if [[ $action == "set" ]]; then
   if [[ $(uname) == "Darwin" ]]; then
-    SED=gsed
+    SED="sed -i''"
   else
-    SED=sed
+    SED="sed -i"
   fi
 
   # Example: https://github.com/embrace-io/embrace-react-native-sdk/pull/535
   if [[ $platform == "android" ]]; then
-    $SED -i "s/androidVersion: \"[^\"]*\"/androidVersion: \"${version}\"/" yarn.config.cjs
+    $SED "s/androidVersion: \"[^\"]*\"/androidVersion: \"${version}\"/" yarn.config.cjs
   fi
 
   # Example: https://github.com/embrace-io/embrace-react-native-sdk/pull/474
   if [[ $platform == "apple" ]]; then
-    $SED -i "s/iosVersion: \"[^\"]*\"/iosVersion: \"${version}\"/" yarn.config.cjs
+    $SED "s/iosVersion: \"[^\"]*\"/iosVersion: \"${version}\"/" yarn.config.cjs
   fi
 
   # Update packages/*/package.json
@@ -51,7 +51,7 @@ if [[ $action == "set" ]]; then
 
   # Update packages/*/*/*/Podfile.lock
   if [[ $platform == "apple" ]]; then
-    echo "$(date): brew install cocoapods gnu-sed" && brew install cocoapods gnu-sed
+    echo "$(date): brew install cocoapods" && brew install cocoapods
     echo "$(date): yarn ios:install" && yarn ios:install
   fi
 fi

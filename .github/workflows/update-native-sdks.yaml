@@ -29,7 +29,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SDK: embrace-${{ matrix.platform }}-sdk
         run: |
-          latest=$(gh release list --repo embrace-io/${SDK} --exclude-drafts --exclude-pre-releases --limit 1 --json tagName --jq '.[].tagName')
+          latest=$(gh release list --repo embrace-io/${SDK} --exclude-drafts --exclude-pre-releases --json tagName,isLatest --jq '.[] | select(.isLatest)|.tagName')
           echo "LATEST=$latest"
           echo "LATEST=$latest" >> $GITHUB_ENV
 

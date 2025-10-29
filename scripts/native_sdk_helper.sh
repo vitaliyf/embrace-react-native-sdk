@@ -43,15 +43,17 @@ if [[ $action == "set" ]]; then
     $SED "s/iosVersion: \"[^\"]*\"/iosVersion: \"${version}\"/" yarn.config.cjs
   fi
 
+  echo "::group::git diff" && git diff; echo "::endgroup::"
+
   # Update packages/*/package.json
-  echo "$(date): corepack enable" && corepack enable
-  echo "$(date): yarn install" && yarn install
-  echo "$(date): yarn constraints --fix" && yarn constraints --fix
-  echo "$(date): yarn build" && yarn build
+  echo "::group::corepack enable" && corepack enable; echo "::endgroup::"
+  echo "::group::yarn install" && yarn install; echo "::endgroup::"
+  echo "::group::yarn constraints --fix" && yarn constraints --fix; echo "::endgroup::"
+  echo "::group::yarn build" && yarn build; echo "::endgroup::"
 
   # Update packages/*/*/*/Podfile.lock
   if [[ $platform == "apple" ]]; then
-    echo "$(date): brew install cocoapods" && brew install cocoapods
-    echo "$(date): yarn ios:install" && yarn ios:install
+    echo "::group::brew install cocoapods" && brew install cocoapods; echo "::endgroup::"
+    echo "::group::yarn ios:install" && yarn ios:install; echo "::endgroup::"
   fi
 fi

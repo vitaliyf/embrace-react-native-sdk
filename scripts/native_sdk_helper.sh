@@ -51,6 +51,7 @@ if [[ $action == "set" ]]; then
 
   # Update packages/*/*/*/Podfile.lock
   if [[ $platform == "apple" ]]; then
+    echo "$(date): brew install cocoapods gnu-sed" && brew install cocoapods gnu-sed
     echo "$(date): yarn ios:install" && yarn ios:install
   fi
 fi

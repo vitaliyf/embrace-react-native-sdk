@@ -39,11 +39,6 @@ jobs:
           echo "CURRENT=$current"
           echo "CURRENT=$current" >> $GITHUB_ENV
 
-#      - uses: actions/setup-node@v6
-#        with:
-#          node-version: "22.x"
-#          cache: "npm"
-
       - name: Update
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,7 +71,7 @@ jobs:
               git commit --all --message "Update ${SDK} from ${CURRENT} to ${LATEST}"
               git push origin $branch
 
-              gh pr create --fill --label $SDK --body "See https://github.com/embrace-io/${SDK}/releases/tag/${LATEST}\n\n/cc @embrace-io/opensource-${{ matrix.platform }}"
+              gh pr create --fill --label $SDK --body "See https://github.com/embrace-io/${SDK}/releases/tag/${LATEST}"
               # https://github.com/cli/cli/issues/11360 --reviewer @embrace-io/opensource-${{ matrix.platform }}
             fi
           fi
